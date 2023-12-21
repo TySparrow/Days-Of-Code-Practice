@@ -43,7 +43,7 @@ namespace Days_Of_Code
         public bool Has12(int[] nums)
         {
             bool hasOneThenTwo = false;
-            if(nums.Length <= 1)
+            if (nums.Length <= 1)
             {
                 return hasOneThenTwo = false;
             }
@@ -52,14 +52,14 @@ namespace Days_Of_Code
 
             if (oneIndex >= 0 && nums.Length > 1)
             {
-                for(int i = oneIndex; i < nums.Length; i++)
+                for (int i = oneIndex; i < nums.Length; i++)
                 {
                     if (nums[i] == 2)
                     {
                         hasOneThenTwo = true;
                         break;
                     }
-                    
+
                 }
             }
             return hasOneThenTwo;
@@ -107,7 +107,7 @@ namespace Days_Of_Code
         {
             int oneCounter = 0;
 
-            if(a.Length == 0 && b.Length == 0)
+            if (a.Length == 0 && b.Length == 0)
             {
                 return 0;
             }
@@ -134,16 +134,16 @@ namespace Days_Of_Code
         */
         public int[] FizzArray3(int start, int end)
         {
-            if(end < start) 
+            if (end < start)
             {
                 return new int[] { };
             }
 
             int[] startEndArray = new int[(end - start)];
             int startingCounter = start;
-            
 
-            for(int i = 0; i < startEndArray.Length; i++)
+
+            for (int i = 0; i < startEndArray.Length; i++)
             {
                 startEndArray[i] = startingCounter;
                 startingCounter++;
@@ -163,18 +163,18 @@ namespace Days_Of_Code
         {
             bool hasOneOrFour = true;
 
-            if(nums.Length == 0)
+            if (nums.Length == 0)
             {
                 return hasOneOrFour = false;
             }
 
-            for(int i = 0; i < nums.Length; i++)
+            for (int i = 0; i < nums.Length; i++)
             {
                 if (nums[i] != 1 && nums[i] != 4)
                 {
                     hasOneOrFour = false;
                     break;
-                    
+
                 }
             }
             return hasOneOrFour;
@@ -191,24 +191,140 @@ namespace Days_Of_Code
         */
         public bool NoTuples(int[] nums)
         {
-            if(nums.Length <= 2)
+            if (nums.Length <= 2)
             {
                 return true;
             }
 
             bool noTriplets = true;
 
-            for(int i = 0; i < nums.Length - 2; i++)
+            for (int i = 0; i < nums.Length - 2; i++)
             {
-                if (nums[i] == nums[i+1] && nums[i] == nums[i+2])
+                if (nums[i] == nums[i + 1] && nums[i] == nums[i + 2])
                 {
                     noTriplets = false;
                     break;
                 }
-                
-                
+
+
             }
             return noTriplets;
+        }
+        /*
+        Exercise 23:
+        Create an integer method called ArrayCount9 that takes in an integer array “nums”. 
+        Given an array of ints, return the number of 9's in the array.
+            Examples:
+            arrayCount9([1, 2, 9]) → 1
+            arrayCount9([1, 9, 9]) → 2
+            arrayCount9([1, 9, 9, 3, 9]) → 3
+        */
+        public int ArrayCount9(int[] nums)
+        {
+            int nineCounter = 0;
+
+            for(int i = 0; i < nums.Length; i++)
+            {
+                if (nums[i] == 9)
+                {
+                    nineCounter++;
+                }
+            }
+            return nineCounter;
+        }
+
+        /*
+         Exercise 29: Fibonacci  (new for V3)
+        Create an integer array method called Fibonacci that takes in no arguments or parameters. 
+        In a Fibonacci  sequence, every number after the first two is the sum of the two preceding ones. 
+        Create a method that returns a Fibonacci sequence that begins 0,1,1,2,3,.... for the values less than 2000.
+        fibonacci () → ([1,1,2,3,5,8,13,....,987,1597])
+        */
+        public int[] Fibonacci()
+        {
+            List<int> sequence = new List<int>();
+
+            int first = 0;
+            int second = 1;
+
+            sequence.Add(first);
+            sequence.Add(second);
+
+            int next = first + second;
+
+            while(next < 2000)
+            {
+                sequence.Add(next);
+                first = second;
+                second = next;
+                next = first + second;
+            }
+
+            return sequence.ToArray();
+        }
+        /*
+         Exercise 25: 
+        Create a boolean method called IsStrictlyIncreasing that takes in an integer array “nums”. 
+        Given an array of integers, return true if the values are strictly increasing. Return false otherwise.
+            Examples:
+            isStrictlyIncreasing([5,7,8,10]) → true
+            isStrictlyIncreasing([5,7,7,10]) → false
+            isStrictlyIncreasing([-5,-3,0,17]) → true
+        */
+        public bool IsStrictlyIncreasing(int[] nums)
+        {
+            bool isIncreasing = false;
+
+            for(int i = 0; i < nums.Length -1; i++)
+            {
+                if (nums[i] < nums[i+1])
+                {
+                    isIncreasing = true;
+                }
+                else
+                {
+                    isIncreasing = false;
+                    break;
+                }
+            }
+            return isIncreasing;
+        }
+        /*
+        Exercise 32:
+        Create an integer method called Factorial that takes in an integer “n” and returns the factorial of the number. 
+        If the integer is represented with the letter n, a factorial (n!) is the product of all positive integers less than or equal to n.
+        factorial(3) → (6)
+        factorial(4) → (24)
+        factorial(10) → (3628800)
+        */
+        public int Factorial(int n)
+        {
+            if(n < 0)
+            {
+                throw new ArgumentException("Factorial is not defined for negative numbers.");
+            }
+
+            int bigNumber = 1;
+
+            for(int i = 1; i <= n; i++)
+            {
+                bigNumber *= i;
+            }
+            return bigNumber;
+        }
+        /*
+        Exercise 36: 
+        Create a string method called FrontTimes that takes in a string “str” and an integer “n”. 
+        Given a string and a non-negative int n, we'll say that the front of the string is the first 3 chars, 
+        or whatever is there if the string is less than length 3. Return n copies of the front;
+         Examples:
+         frontTimes("Chocolate", 2) → "ChoCho"
+         frontTimes("Chocolate", 3) → "ChoChoCho"
+         frontTimes("Abc", 3) → "AbcAbcAbc"
+        */
+        public string FrontTimes(string str, int n)
+        {
+            return "FrontTimes";
         }
     }
 }
