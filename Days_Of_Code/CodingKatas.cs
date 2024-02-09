@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
@@ -223,7 +225,7 @@ namespace Days_Of_Code
         {
             int nineCounter = 0;
 
-            for(int i = 0; i < nums.Length; i++)
+            for (int i = 0; i < nums.Length; i++)
             {
                 if (nums[i] == 9)
                 {
@@ -252,7 +254,7 @@ namespace Days_Of_Code
 
             int next = first + second;
 
-            while(next < 2000)
+            while (next < 2000)
             {
                 sequence.Add(next);
                 first = second;
@@ -275,9 +277,9 @@ namespace Days_Of_Code
         {
             bool isIncreasing = false;
 
-            for(int i = 0; i < nums.Length -1; i++)
+            for (int i = 0; i < nums.Length - 1; i++)
             {
-                if (nums[i] < nums[i+1])
+                if (nums[i] < nums[i + 1])
                 {
                     isIncreasing = true;
                 }
@@ -299,14 +301,14 @@ namespace Days_Of_Code
         */
         public int Factorial(int n)
         {
-            if(n < 0)
+            if (n < 0)
             {
                 throw new ArgumentException("Factorial is not defined for negative numbers.");
             }
 
             int bigNumber = 1;
 
-            for(int i = 1; i <= n; i++)
+            for (int i = 1; i <= n; i++)
             {
                 bigNumber *= i;
             }
@@ -324,7 +326,176 @@ namespace Days_Of_Code
         */
         public string FrontTimes(string str, int n)
         {
-            return "FrontTimes";
+            //n Cannot be negative, but need to check if it is 0 first, and return empty string
+            if (n == 0)
+            {
+                return "";
+            }
+
+            //New string to be returned
+            string copiedString = "";
+
+            if (str.Length <= 3)
+            {
+                //Check string length if it is <= 3, return str n times
+                //If string > 3, return substring of 3 n times
+                for (int i = 0; i < n; i++)
+                {
+                    copiedString += str;
+                }
+                return copiedString;
+            }
+            //Loop through strings > 3, concat substrings together
+
+            for (int i = 0; i < n; i++)
+            {
+                copiedString += str.Substring(0, 3);
+            }
+            return copiedString;
+        }
+
+
+        /*
+         * The median of a list of numbers is essentially its middle element after sorting. The same number of elements
+         * occur after it as before. Given a list of numbers with an odd number of elements, find the median?
+         * Complete the findMedian function in the editor below.
+         * findMedian has the following parameter(s): int arr[n]: an unsorted array of integers
+         * 
+         * Returns:
+         * int: the median of the array
+         * 
+         * Input Format:
+         * The first line contains the integer n, the size of arr.
+         * The second line contains n space-separated integers arr[i]
+         * 
+         * Constraints:
+         * 1 < n < 1000001
+         * n is odd
+         *-10000 <= arr[i] <= 10000
+         */
+
+        public int FindMedian(List<int> arr)
+        {
+            if (arr.Count == 1)
+            {
+                return arr[0];
+            }
+            arr.Sort();
+
+            int middleIndex = arr.Count / 2;
+            int median = arr[middleIndex];
+            return median;
+        }
+
+        //Write a method that takes a string of parentheses, and determines if the order of the parentheses is valid.
+        //The method should return true if the string is valid, and false if it's invalid.
+        //Method name is ValidParentheses
+        //    Examples
+        //    "()"              =>  true
+        //    ")(()))"          =>  false
+        //    "("               =>  false
+        //    "(())((()())())"  =>  true
+        //    Constraints
+        //    0 <= input.length <= 100
+        //    Along with opening(() and closing ()) parenthesis, input may contain any valid ASCII characters.
+        //    Furthermore, the input string may be empty and/or not contain any parentheses at all.
+        //    Do not treat other forms of brackets as parentheses(e.g. [], { }, <>).
+        public bool ValidParentheses(string str)
+        {
+            //Check edge cases -- Empty string, null, or starting with closing paren = false
+            //String can also contain no '(' or ')'. For this I am treating it as false.
+
+            if (str.Length == 0 || str == null || (str.Substring(0, 1) == ")"))
+            {
+                return false;
+            }
+            else if (!str.Contains("(") && !str.Contains(")"))
+            {
+                return false;
+            }
+
+            //Need counter that will increase with '(' and decrease with ')'
+            int parenCounter = 0;
+
+            //Loop through string
+            //If char = '(' increase the counter by 1.
+            //If char = ')' decrease the counter by 1.
+            foreach (char c in str)
+            {
+                if (c == '(')
+                {
+                    parenCounter++;
+                }
+                else if (c == ')')
+                {
+                    parenCounter--;
+                }
+            }
+            //If parentheses are balanced, return true, else return false
+            if (parenCounter == 0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+            
+        }
+
+
+        //Write a method called returnMost/ReturnMost that takes in a string and returns the character that appears
+        //the most in the string
+
+        //EX returnMost("Hi, this is my string") => returns i
+        //String parameter may be length 0 or null
+
+        public char ReturnMost(string str)
+        {
+            //Check if string is length 0 or null, return space char
+            if(str.Length == 0 || str == null)
+            {
+                return ' ';
+            }
+            //Create a new instance of a dictionary to have <char, int> to count all characters in string
+            Dictionary<char, int> map = new Dictionary<char, int>();
+
+            //Loop through string
+            foreach(char c in str)
+            {
+                if(c != ' ')
+                {
+                    //Make sure char is case insensitive -- make them all lower case
+                    char lowerCaseChar = Char.ToLower(c);
+                    //Add new KVP's if char is not already in dictionary
+                    if(!map.ContainsKey(lowerCaseChar))
+                    {
+                        map[lowerCaseChar] = 1;
+                    }
+                    else
+                    {
+                        //Else, Update int counter for key if char is already in dictionary
+                        map[lowerCaseChar]++;
+                    }
+                }
+            }
+            //Set up an int variable to assign value for most occurring char
+            int charCount = 0;
+            //Set up char variable to assign and return at the end
+            char mostChar = '\0';
+
+            //Loop through dictionary after string is done
+            foreach(KeyValuePair<char, int> kvp in map)
+            {
+                //Find highest count for pair
+                if (kvp.Value > charCount)
+                {
+                    charCount = kvp.Value;
+                    mostChar = kvp.Key;
+                }
+            }
+            //Return char with highest int
+            return mostChar;
         }
     }
 }
