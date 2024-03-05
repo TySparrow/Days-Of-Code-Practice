@@ -440,7 +440,7 @@ namespace Days_Of_Code
             {
                 return false;
             }
-            
+
         }
 
 
@@ -453,7 +453,7 @@ namespace Days_Of_Code
         public char ReturnMost(string str)
         {
             //Check if string is length 0 or null, return space char
-            if(str.Length == 0 || str == null)
+            if (str.Length == 0 || str == null)
             {
                 return ' ';
             }
@@ -461,14 +461,14 @@ namespace Days_Of_Code
             Dictionary<char, int> map = new Dictionary<char, int>();
 
             //Loop through string
-            foreach(char c in str)
+            foreach (char c in str)
             {
-                if(c != ' ')
+                if (c != ' ')
                 {
                     //Make sure char is case insensitive -- make them all lower case
                     char lowerCaseChar = Char.ToLower(c);
                     //Add new KVP's if char is not already in dictionary
-                    if(!map.ContainsKey(lowerCaseChar))
+                    if (!map.ContainsKey(lowerCaseChar))
                     {
                         map[lowerCaseChar] = 1;
                     }
@@ -485,7 +485,7 @@ namespace Days_Of_Code
             char mostChar = '\0';
 
             //Loop through dictionary after string is done
-            foreach(KeyValuePair<char, int> kvp in map)
+            foreach (KeyValuePair<char, int> kvp in map)
             {
                 //Find highest count for pair
                 if (kvp.Value > charCount)
@@ -496,6 +496,59 @@ namespace Days_Of_Code
             }
             //Return char with highest int
             return mostChar;
+        }
+        /*
+        Exercise 51: ArrayInt2ListDouble 
+        Create a list of type double method called ArrayInt2ListDouble that takes in an integer array “ints”. 
+        Given an array of ints, divide each int by 2, and return a list of doubles.
+
+        arrayInt2ListDouble( {5, 8, 11, 200, 97} ) →  [2.5, 4.0, 5.5, 100, 48.5]
+        arrayInt2ListDouble( {745, 23, 44, 9017, 6} ) →  [372.5, 11.5, 22, 4508.5, 3]
+        arrayInt2ListDouble( {84, 99, 3285, 13, 877} ) →  [42, 49.5, 1642.5, 6.5, 438.5]
+        */
+        public List<double> ArrayInt2ListDouble(int[] ints)
+        {
+            //Create empty List to return
+            List<double> halves = new List<double>();
+
+            //Loop through ints array
+            foreach(int num in ints)
+            {
+                //Parse number into a double
+                double newNum = (double)num;
+
+                //Divide each double number by 2, limit 1 decimal place
+                double halvedNum = Math.Round((newNum / 2), 1);
+
+                //Place new number into returned list variable
+                halves.Add(halvedNum);
+            }
+            return halves;
+        }
+        /*
+        Exercise 49: DistinctValues 
+        Create a list of type string method called DistinctValues that takes in a list of type string “strings”. 
+        Given a list of strings, return a list that contains the distinct values.
+
+        distinctValues( ["red", "yellow", "green", "yellow", "blue", "green", "purple"] ) →  ["red", "yellow", "green", "blue", "purple"]
+        distinctValues( ["jingle", "bells", "jingle", "bells", "jingle", "all", "the", "way"] ) →  ["jingle", "bells", "all", "the", "way"]
+        */
+        public List<string> DistinctValues(List<string> strings)
+        {
+            //Create a new list to be returned
+            List<string> uniqueList = new List<string>();
+
+            //Create HashSet to place all unique items into a collection
+            HashSet<string> distinct = new HashSet<string>(strings);
+
+            //Loop through HashSet and add into new list
+            foreach(string s in distinct)
+            {
+                uniqueList.Add(s);
+            }
+
+            //Return new unique list
+            return uniqueList;
         }
     }
 }
